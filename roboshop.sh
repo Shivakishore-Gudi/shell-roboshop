@@ -10,4 +10,5 @@ if [ $instance != "frontend" ]; then
      IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].privateIpAddress' --output text)
 else
      IP=$(aws ec2 describe-instances --instance-ids $INSTANCE_ID --query 'Reservations[0].Instances[0].publicIpAddress' --output text)
+fi     
 done      
