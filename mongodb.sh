@@ -29,5 +29,5 @@ systemctl enable mongod &>>$LOG_FILE
 VALIDATE $? "enable mongodb"
 
 systemctl start mongod
-VALIDATE $? "Enable mongodb"
+VALIDATE $? "start mongodb"
 
