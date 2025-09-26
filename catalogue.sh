@@ -2,7 +2,8 @@
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-MONGODB_HOST=mongodb.gskdaws.fun 
+MONGODB_HOST=mongodb.gskdaws.fun
+SCRIPT_DIR=$pwd
 
 mkdir -p $LOGS_FOLDER
 echo "script started executed at: $(date)"
@@ -43,7 +44,7 @@ unzip /tmp/catalogue.zip &>>$LOG_FILE
 VALIDATE $? "Unzip Catalogue"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing Dependencies"
-cp catalogue.service /etc/systemd/system/catalogue.service
+cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
 VALIDATE $? "copy systemctl service"
 systemctl daemon-reload
 systemctl enable catalogue &>>$LOG_FILE
