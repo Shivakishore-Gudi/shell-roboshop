@@ -3,7 +3,8 @@ LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
 MONGODB_HOST=mongodb.gskdaws.fun
-SCRIPT_DIR=$pwd
+SCRIPT_DIR=$(cd $(dirname $0); pwd)
+
 
 mkdir -p $LOGS_FOLDER
 echo "script started executed at: $(date)"
@@ -32,7 +33,7 @@ dnf install nodejs -y &>>$LOG_FILE
 VALIDATE $? "Installing Nodjs"
 
 id roboshop
-if [ $? -ne 0 ]; then &>>$LOG_FILE
+if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop &>>$LOG_FILE
     VALIDATE $? "Creating system user"
 else
