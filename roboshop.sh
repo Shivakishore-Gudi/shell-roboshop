@@ -15,6 +15,12 @@ do
     --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" \
     --query 'Instances[0].InstanceId' \
     --output text)
+    echo "Launched instance ID: $INSTANCE_ID"
+
+    # Wait until the instance is running
+    echo "Waiting for instance $INSTANCE_ID to be in running state..."
+    aws ec2 wait instance-running --instance-ids $INSTANCE_ID
+    echo "Instance $INSTANCE_ID is now running."
 
   # Fetch IP depending on instance type
   if [ "$instance" = "frontend" ]; then
@@ -31,11 +37,10 @@ do
         RECORD_NAME="$instance.$DOMAIN_NAME"
   fi     
 
-  echo "$instance: $IP"
+  # Update Route53 DNS record
   aws route53 change-resource-record-sets \
-  --hosted-zone-id $ZONE_ID \
-  --change-batch '
-  {
+    --hosted-zone-id $ZONE_ID \
+    --change-batch "{
     "Comment": "Updating record set"
     ,"Changes": [{
       "Action"              : "UPSERT"
@@ -50,4 +55,9 @@ do
     }]
   }
   '
+  if [ $? -eq 0 ]; then
+    echo "DNS record for $RECORD_NAME updated successfully."
+  else
+    echo "Failed to update DNS record for $RECORD_NAME."
+  fi
 done
