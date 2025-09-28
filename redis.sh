@@ -1,4 +1,5 @@
 #!/bin/bash
+USERID=$(id -u)
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
@@ -9,10 +10,10 @@ SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log" #/var/log/shell-script/redis.log
 START_TIME=$(date +%s)
 mkdir -p $LOG_FOLDER
-echo -e "$Y script started at :$(date) $N" | tee -a $LOG_FILE
+echo -e "$Y script started at: $(date) $N" | tee -a $LOG_FILE
 #ROOT CHECK
-USERID=$(id -u)
-if [ USERID -ne 0 ]; then
+
+if [ $USERID -ne 0 ]; then
     echo "$R ERROR:: please run these script at root $N" | tee -a $LOG_FILE
     exit 1
 fi
