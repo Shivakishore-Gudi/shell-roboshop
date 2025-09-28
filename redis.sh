@@ -7,6 +7,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log" #/var/log/shell-script/redis.log
+START_TIME=$(date +%s)
 mkdir -p $LOG_FOLDER
 echo -e "$Y script started at :$(date) $N" | tee -a $LOG_FILE
 #ROOT CHECK
@@ -37,4 +38,7 @@ systemctl enable redis &>>$LOG_FILE
 VALIDATE $? "enabling redis"
 systemctl start redis &>>$LOG_FILE
 VALIDATE $? "restarting redis"
+END_TIME=$(date +%s)
+TOTAL_TIME=$(( $END_TIME - $START_TIME ))
+echo -e "script executed in : $Y $TOTAL_TIME seconds$N "
            
