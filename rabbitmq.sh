@@ -8,7 +8,7 @@ N="\e[0m"
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" #/var/log/shell-script/redis.log
-SCRIPT_DIR=$(pwd)
+SCRIPT_DIR=$pwd
 START_TIME=$(date +%s)
 mkdir -p $LOGS_FOLDER
 echo -e "$Y script started at: $(date) $N" | tee -a $LOG_FILE
@@ -28,14 +28,14 @@ fi
 }    
 cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 
-dnf install rabbitmq-server -y
+dnf install rabbitmq-server -y &>> $LOG_FILE
 VALIDATE $? "installing rabbitmq-server"
-systemctl enable rabbitmq-server
+systemctl enable rabbitmq-server $LOG_FILE
 VALIDATE $? "enabling rabbitmq-server"
-systemctl start rabbitmq-server
+systemctl start rabbitmq-server $LOG_FILE
 VALIDATE $? "starting rabbitmq-server"
-rabbitmqctl add_user roboshop roboshop123
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+rabbitmqctl add_user roboshop roboshop123 $LOG_FILE
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" $LOG_FILE
 VALIDATE $? "setting up permissions"
 END_TIME=$(date +%s)
 TOTAL_TIME=$(( $END_TIME - $START_TIME ))
