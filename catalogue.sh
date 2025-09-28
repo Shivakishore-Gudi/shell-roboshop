@@ -63,7 +63,11 @@ cp $SCRIPT_DIR/mongo.repo /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copy mongo repo"
 dnf install mongodb-mongosh -y &>>$LOG_FILE
 VALIDATE $? "installing mongodb client"
-mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
-VALIDATE $? "Load Catalogue products"
+INDEX=$(mongosh mongodb.gskdaws.fun --quiet --eval "db.getmongo().getDBNames().indexof('catalogue')")
+if [ $INDEX -le 0 ];then
+    mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
+    VALIDATE $? "Load Catalogue products"
+else
+    echo -e "catalogue products already loaded ... $Y Skipping $N"
 systemctl restart catalogue
 VALIDATE $? "Restarted catalogue"
