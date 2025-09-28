@@ -49,7 +49,7 @@ VALIDATE $? "Changing to app directory"
 rm -rf /app/*
 VALIDATE $? "removing existing code"
 unzip /tmp/user.zip &>>$LOG_FILE
-VALIDATE $? "Unzip Catalogue"
+VALIDATE $? "Unzip user"
 npm install &>>$LOG_FILE
 VALIDATE $? "Installing Dependencies"
 cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
