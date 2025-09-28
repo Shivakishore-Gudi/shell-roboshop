@@ -2,7 +2,7 @@
 AMI_ID="ami-09c813fb71547fc4f"
 SG_ID="sg-0cd87d6ca0bdc2016"
 ZONE_ID="Z021089227RC5GG538AO4"
-DOMAIN_NAME="gskdaws.fun"
+DOMAIN_NAME="mongodb.gskdaws.fun"
 
 
 for instance in "$@"
