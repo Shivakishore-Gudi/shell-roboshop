@@ -7,9 +7,9 @@ N="\e[0m"
 #Logs Folder & File
 LOGS_FOLDER="/var/log/shell-script"
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
-LOG_FILE="$LOG_FOLDER/$SCRIPT_NAME.log" #/var/log/shell-script/redis.log
+LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log" #/var/log/shell-script/redis.log
 START_TIME=$(date +%s)
-mkdir -p $LOG_FOLDER
+mkdir -p $LOGS_FOLDER
 echo -e "$Y script started at: $(date) $N" | tee -a $LOG_FILE
 #ROOT CHECK
 
@@ -20,7 +20,7 @@ fi
 VALIDATE() {
     if [ $1 -ne 0 ]; then
         echo -e "$R ERROR:: $2 failed $N " | tee -a $LOG_FILE
-        exit1
+        exit 1
     else
         echo -e "$G success :: $2 completed $N" | tee -a $LOG_FILE
 fi 
