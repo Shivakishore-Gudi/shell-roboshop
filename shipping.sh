@@ -67,3 +67,4 @@ else
 fi
 
 systemctl restart shipping
+echo "restart shipping"
