@@ -25,14 +25,14 @@ VALIDATE() {
         echo -e "$G success :: $2 completed $N" | tee -a $LOG_FILE
 fi 
 }
-dnf install mysql-server -y
+dnf install mysql-server -y &>>$LOG_FILE
 VALIDATE $? "Installing mysql server"
-systemctl enable mysqld
+systemctl enable mysqld &>>$LOG_FILE
 VALIDATE $? "Enabling mysql server"
-systemctl start mysqld  
+systemctl start mysqld  &>>$LOG_FILE
 VALIDATE $? "Starting mysql server"
 
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass RoboShop@1 &>>$LOG_FILE
 VALIDATE $? "Setting the root password"
 
 END_TIME=$(date +%s)
