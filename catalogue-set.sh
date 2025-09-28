@@ -53,7 +53,7 @@ dnf install mongodb-mongosh -y &>>$LOG_FILE
 sudo systemd-resolve --flush-caches 2>/dev/null || true #flush the previous IP address in cache
 echo "flushed"
 INDEX=$(mongosh mongodb.gskdaws.fun --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')")
-if [ $INDEX -le: 0 ]; then
+if [ $INDEX -le:: 0 ]; then
     mongosh --host $MONGODB_HOST </app/db/master-data.js &>>$LOG_FILE
 else
     echo -e "Catalogue products already loaded ... $Y SKIPPING $N"
