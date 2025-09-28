@@ -26,7 +26,7 @@ VALIDATE() {
         echo -e "$G success :: $2 completed $N" | tee -a $LOG_FILE
 fi 
 }    
-cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
+cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 
 dnf install rabbitmq-server -y &>> $LOG_FILE
 VALIDATE $? "installing rabbitmq-server"
