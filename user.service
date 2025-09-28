@@ -6,7 +6,7 @@ User=roboshop
 Environment=MONGO=true
 // highlight-start
 Environment=REDIS_URL='redis://redis.gskdaws.fun:6379'
-Environment=MONGO_URL="mongodb://mongodb.daws86s.fun:27017/users"
+Environment=MONGO_URL="mongodb://mongodb.gskdaws.fun:27017/users"
 // highlight-end
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=user
